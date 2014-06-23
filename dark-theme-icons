@@ -1,2 +1,3 @@
 #!/bin/bash
+sudo rm /usr/local/indicator-amd/amd.png
 sudo ln -s /usr/local/indicator-amd/amd-dark.png /usr/local/indicator-amd/amd.png
