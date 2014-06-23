@@ -6,7 +6,7 @@ if (( $EUID )); then
 fi
 
 echo 'Installer for "amd-indicator":'
-echo "\tIndicator applet for Ubuntu laptop users with AMD/Intel switchable graphics."
+echo -e "\tIndicator applet for Ubuntu laptop users with AMD/Intel switchable graphics."
 
 # Deprecated
 # rm -f /etc/ld.so.conf.d/multiarchfix.conf
