@@ -1,2 +1,5 @@
 #!/bin/bash
+sudo rm /usr/local/indicator-amd/amd.png
+sudo rm /usr/local/indicator-amd/intel.png
 sudo ln -s /usr/local/indicator-amd/amd-light.png /usr/local/indicator-amd/amd.png
+sudo ln -s /usr/local/indicator-amd/intel-light.png /usr/local/indicator-amd/intel.png
