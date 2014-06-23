@@ -1,4 +1,4 @@
 #!/bin/bash
 amdconfig --px-igpu
-# service lightdm stop
-service lightdm restart
+service lightdm stop
+service lightdm start
