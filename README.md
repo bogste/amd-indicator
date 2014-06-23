@@ -31,4 +31,4 @@ chmod a+x setup.sh
 sudo ./setup.sh
 ```
 
-**Alternatively, you might also like to use the _DEB_ package file provided.**
+**Alternatively, you might also like to use the _DEB_ package file provided in main repository https://github.com/beidl/amd-indicator.**
