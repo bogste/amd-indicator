@@ -16,6 +16,12 @@ echo -e "\tIndicator applet for Ubuntu laptop users with AMD/Intel switchable gr
 # 	ln -s /usr/lib/i386-linux-gnu/mesa /usr/i386-linux-gnu/mesa
 # fi
 
+# There was some problems in some programs with finding i965_dri.so file
+if [[ -d /usr/lib/x86_64-linux-gnu && -d /usr/lib/fglrx/dri ]]; then
+	sudo ln -s /usr/lib/x86_64-linux-gnu/dri/i965_dri.so /usr/lib/fglrx/dri/i965_dri.so
+	sudo ln -s /usr/lib/x86_64-linux-gnu/dri/i965_dri.so /usr/lib/fglrx/dri/i965dri.so
+fi
+
 #
 echo 'Remove installed instance.'
 #
