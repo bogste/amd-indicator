@@ -1,8 +1,13 @@
 #!/bin/bash
+## Description: AMD Indicator Discrete GPU switch on script.
+## Tested on Mint 17.3 and (fglrx) Catalyst 15.200.xxxx
+
+## Use AMD Configuration Utility to switch to discrete GPU
 amdconfig --px-dgpu
-# Works in Ubuntu 14.04 and Catalyst 14.6 Beta
-service lightdm stop
-service lightdm start
-# sync
-# pkill X
-# reboot
+
+## On Linux Mint...
+## When switching to discrete GPU, restarting MDM does not work (it hangs because X Server
+## cannot find a Display device); must find correct way to start X and MDM
+# restart mdm
+## Until then... as a workaround use:
+reboot

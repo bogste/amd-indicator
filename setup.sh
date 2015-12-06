@@ -7,7 +7,7 @@ if (( $EUID )); then
 fi
 
 echo 'Installer for "amd-indicator":'
-echo -e "\tIndicator applet for Ubuntu laptop users with AMD/Intel switchable graphics."
+echo -e "\tIndicator applet for Linux Mint laptop users with AMD/Intel switchable graphics."
 
 # There was some problems in some programs with finding i965_dri.so file
 if [[ -d /usr/lib/x86_64-linux-gnu && -d /usr/lib/fglrx/dri ]]; then

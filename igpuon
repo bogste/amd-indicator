@@ -1,4 +1,9 @@
 #!/bin/bash
+## Description: AMD Indicator Intel GPU switch on script.
+## Tested on Mint 17.3 and (fglrx) Catalyst 15.200.xxxx
+
+## Use AMD Configuration Utility to switch to integrated GPU
 amdconfig --px-igpu
-service lightdm stop
-service lightdm start
+## On Linux Mint...
+## We must restart MDM
+restart mdm
