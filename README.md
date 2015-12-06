@@ -1,7 +1,7 @@
-AMD Indicator
+Linux Mint (Cinnamon) AMD ATI/Intel Indicator
 =============
 
-**Indicator applet for AMD/Intel switchable graphics**
+**Indicator applet for AMD ATI/Intel hybrid graphics**
 
 This indicator applet allows owners of laptops with AMD/Intel hybrid graphics capabilities to
 easily switch between the graphics cards without the need of running CCC or terminal commands.
@@ -13,7 +13,7 @@ Prerequisites
 
 You have to have a few packages installed to take advantage of this indicator.
 
-**Make sure you have the AMD driver.**
+**Make sure you have the AMD ATI driver (fglrx) installed (or selected in Driver Manager).**
 
 In case the indicator doesn't start because it is missing the **python module "_appindicator_"**, again, make sure to install missing packages.
 
@@ -31,4 +31,4 @@ chmod a+x setup.sh
 sudo ./setup.sh
 ```
 
-**Alternatively, you might also like to use the _DEB_ package file provided in main repository https://github.com/beidl/amd-indicator.**
+**Original author: https://github.com/beidl/amd-indicator.**
