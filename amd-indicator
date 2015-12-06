@@ -84,7 +84,7 @@ class AMDIndicator:
 	os.system("/usr/bin/amdxdg-su -c /usr/bin/amdcccle")
 
     def showRebootDialog(self):
-	message = "The X server will restart now.\nSave all your work-in-progress\nbefore pressing OK button."
+	message = "You will have to be logged out in order for changes to take effect.\nPlease save any WORK-IN-PROGRESS and close all your applications\nbefore pressing the OK button or they will be forcefully closed."
 	dialog = gtk.MessageDialog(None, gtk.DIALOG_MODAL, gtk.MESSAGE_INFO,
                                        gtk.BUTTONS_NONE, message)
 	dialog.set_deletable(False)
@@ -110,9 +110,11 @@ class AMDIndicator:
 
     def switchToIntegrated(self):
 	os.system("sudo /usr/local/indicator-amd/igpuon")
+	os.system("/usr/local/indicator-amd/logout-user")
 
     def switchToDiscrete(self):
 	os.system("sudo /usr/local/indicator-amd/dgpuon")
+	os.system("/usr/local/indicator-amd/logout-user")
 
     def main(self):
         gtk.main()

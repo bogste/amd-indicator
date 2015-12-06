@@ -1,0 +1,4 @@
+#!/bin/bash
+## Description: A simple logout script which uses the Cinnamon utilities to control the user session.
+## Will use forcefully to log the user out. This will need to be run from the current logged in user session.
+cinnamon-session-quit --force

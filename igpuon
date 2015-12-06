@@ -3,7 +3,5 @@
 ## Tested on Mint 17.3 and (fglrx) Catalyst 15.200.xxxx
 
 ## Use AMD Configuration Utility to switch to integrated GPU
+## These commands will need to be run as sudo
 amdconfig --px-igpu
-## On Linux Mint...
-## We must restart MDM
-restart mdm

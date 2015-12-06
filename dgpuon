@@ -3,11 +3,6 @@
 ## Tested on Mint 17.3 and (fglrx) Catalyst 15.200.xxxx
 
 ## Use AMD Configuration Utility to switch to discrete GPU
+## These commands will need to be run as sudo
 amdconfig --px-dgpu
 
-## On Linux Mint...
-## When switching to discrete GPU, restarting MDM does not work (it hangs because X Server
-## cannot find a Display device); must find correct way to start X and MDM
-# restart mdm
-## Until then... as a workaround use:
-reboot

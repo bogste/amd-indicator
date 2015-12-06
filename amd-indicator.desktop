@@ -1,9 +1,10 @@
+#!/usr/bin/env xdg-open
 [Desktop Entry]
 Type=Application
 Exec=/usr/local/bin/amd-indicator
 Hidden=false
 NoDisplay=false
 X-GNOME-Autostart-enabled=true
-Name=AMD Indicator
+Name=AMD ATI/Intel GPU Indicator
 Comment=Simple indicator applet to switch between graphics cards on AMD/Intel hybrid systems
 Icon=display

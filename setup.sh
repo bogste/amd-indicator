@@ -15,15 +15,14 @@ if [[ -d /usr/lib/x86_64-linux-gnu && -d /usr/lib/fglrx/dri ]]; then
 	sudo ln -s /usr/lib/x86_64-linux-gnu/dri/i965_dri.so /usr/lib/fglrx/dri/i965dri.so
 fi
 
-#
-echo 'Remove installed instance.'
+# Cleanup scripts
+echo 'Removing any possibly already installed instances...'
 #
 rm -f /usr/bin/amd-indicator
-rm -Rf /usr/lib/amdindicator
 rm -Rf /usr/local/indicator-amd
 
 #
-echo 'Copying new files...'
+echo 'Copying AMD Indicator application files to "/usr/local/indicator-amd"...'
 #
 mkdir -p /usr/local/indicator-amd
 cp amd-indicator /usr/local/indicator-amd/
@@ -51,6 +50,10 @@ cp restart /usr/local/indicator-amd/
 chown root:root /usr/local/indicator-amd/restart
 chmod a+x /usr/local/indicator-amd/restart
 
+## Copy user logout scripts
+cp logout-user /usr/local/indicator-amd/
+chmod a+x /usr/local/indicator-amd/logout-user
+
 # cp amd.png /usr/local/indicator-amd/
 cp amd-dark.png /usr/local/indicator-amd/
 cp amd-light.png /usr/local/indicator-amd/
@@ -64,13 +67,16 @@ ln -s /usr/local/indicator-amd/intel-dark.png /usr/local/indicator-amd/intel.png
 chmod a+r /usr/local/indicator-amd/*.png
 
 #
-echo "Configure fakeroot security policy."
+echo "Configuring fakeroot security policy for AMD Control Center access."
 #
 cp -f amd-indicator-sudoers /etc/sudoers.d/
 chmod 644 /etc/sudoers.d/amd-indicator-sudoers
 
 #
-echo 'Set up launcher'
+echo 'Setting up launchers...'
 #
 cp -f amd-indicator.desktop /etc/xdg/autostart/
 cp -f amd-indicator.desktop /usr/share/applications/
+
+#
+echo 'All done! Search for "AMD ATI/Intel GPU Indicator" application in your Mint Menu...'

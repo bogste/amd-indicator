@@ -31,4 +31,4 @@ chmod a+x setup.sh
 sudo ./setup.sh
 ```
 
-**Original author: https://github.com/beidl/amd-indicator.**
+**Original application and author: https://github.com/beidl/amd-indicator**
