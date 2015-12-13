@@ -37,22 +37,27 @@ chmod 755 /usr/local/amd-indicator/amd-indicator
 # Add a link to our application, in user local binaries
 ln -sf /usr/local/amd-indicator/amd-indicator /usr/local/bin/amd-indicator
 
+# Copy discrete GPU-related scripts
 cp dgpuon /usr/local/amd-indicator/
 chown root:root /usr/local/amd-indicator/dgpuon
 chmod a+x /usr/local/amd-indicator/dgpuon
 
+# Copy integrated GPU-related scripts
 cp igpuon /usr/local/amd-indicator/
 chown root:root /usr/local/amd-indicator/igpuon
 chmod a+x /usr/local/amd-indicator/igpuon
 
+# Copy dark theme scripts
 cp dark-theme-icons /usr/local/amd-indicator/
 chown root:root /usr/local/amd-indicator/dark-theme-icons
 chmod a+x /usr/local/amd-indicator/dark-theme-icons
 
+# Copy light theme scripts
 cp light-theme-icons /usr/local/amd-indicator/
 chown root:root /usr/local/amd-indicator/light-theme-icons
 chmod a+x /usr/local/amd-indicator/light-theme-icons
 
+# Copy application 'restart' scripts
 cp restart /usr/local/amd-indicator/
 chown root:root /usr/local/amd-indicator/restart
 chmod a+x /usr/local/amd-indicator/restart
@@ -61,16 +66,18 @@ chmod a+x /usr/local/amd-indicator/restart
 cp logout-user /usr/local/amd-indicator/
 chmod a+x /usr/local/amd-indicator/logout-user
 
-# Link amd.png to /usr/local/amd-indicator/
+# Copy and link amd.png to /usr/local/amd-indicator/
 cp resources/amd-dark.png /usr/local/amd-indicator/resources
 cp resources/amd-light.png /usr/local/amd-indicator/resources
+# Set dark theme as default
 ln -s /usr/local/amd-indicator/resources/amd-dark.png /usr/local/amd-indicator/amd.png
 
-# Link intel.png to /usr/local/amd-indicator/
+# Copy and link intel.png to /usr/local/amd-indicator/
 cp resources/intel-dark.png /usr/local/amd-indicator/resources
 cp resources/intel-light.png /usr/local/amd-indicator/resources
+# Set dark theme as default
 ln -s /usr/local/amd-indicator/resources/intel-dark.png /usr/local/amd-indicator/intel.png
-
+# Allow read permissions for everyone
 chmod a+r /usr/local/amd-indicator/*.png
 
 #
