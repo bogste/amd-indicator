@@ -1,23 +1,29 @@
-Linux Mint (Cinnamon) AMD ATI/Intel Indicator
+AMD ATI/Intel Indicator for Linux Mint 17 (Cinnamon/MATE)
 =============
 
-**Indicator applet for AMD ATI/Intel hybrid graphics**
+**An indicator applet for AMD ATI/Intel hybrid graphics _fast_ switching.**
 
 This indicator applet allows owners of laptops with AMD/Intel hybrid graphics capabilities to
-easily switch between the graphics cards without the need of running CCC or terminal commands.
+easily switch between graphics cards without the need of running ATI CCC or terminal commands (including rebooting
+the system). The current version will have to terminate the current user session, however (e.g. done via _Logout_).
 
-![screenshot](amd-indicator-screenshot.png)
+![AMD ATI/Intel Indicator screenshot](resources/amd-indicator-screenshot.png)
+
+Image credits: [Sadi Yumuşak](https://github.com/Sadi58)
 
 Prerequisites
 ==============
 
-You have to have a few packages installed to take advantage of this indicator.
+You will need to have a few packages installed beforehand, in order to take advantage of this indicator.
 
-**Make sure you have the AMD ATI driver (fglrx) installed (or selected in Driver Manager).**
+**Make sure you have the proper AMD ATI drivers - _fglrx_ variant, NOT _fglrx-updates_ - installed, preferably via Mint's 
+_Driver Manager_ application.** (Note: This application has been built for and tested starting with version 15.200.1xxx 
+of these drivers on a Linux Mint 17.3 x64 installation). 
 
-In case the indicator doesn't start because it is missing the **python module "_appindicator_"**, again, make sure to install missing packages.
+In case the indicator application doesn't start because it is missing the **python module "_appindicator_"**, again, make sure to 
+install missing packages.
 
-To install all needed dependencies, for example, you can enter the following command in terminal:
+For example, to install all the needed dependencies via CLI, you can enter the following command in a terminal window:
 
 ```sudo apt-get install fglrx python-appindicator```
 
@@ -31,4 +37,18 @@ chmod a+x setup.sh
 sudo ./setup.sh
 ```
 
-**Original application and author: https://github.com/beidl/amd-indicator**
+
+Credits
+==============
+
+**Original code for this indicator application is authored by** [Alfred Neumayer](https://github.com/beidl/amd-indicator).
+
+Other possible contributions may include (and are not limited to) the following authors:
+
+ - [Sadi Yumuşak](https://github.com/Sadi58)
+ - [picccard](https://github.com/picccard)
+ - [Михайлов Антон](https://github.com/anion155)
+
+
+**From my research, all this is based on a solution originally offered by [Marian Lux](http://askubuntu.com/users/29483/marian-lux), in a discussion thread over at: 
+[Ask Ubuntu - How do I get AMD/Intel Hybrid Graphics drivers to work?](http://askubuntu.com/questions/205112/how-do-i-get-amd-intel-hybrid-graphics-drivers-to-work/288355#288355)**

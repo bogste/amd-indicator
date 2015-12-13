@@ -1,4 +1,6 @@
 #!/bin/bash
-## Description: A simple logout script which uses the Cinnamon utilities to control the user session.
-## Will use forcefully to log the user out. This will need to be run from the current logged in user session.
-cinnamon-session-quit --force
+# Description: A straightforward logout script which uses the GNOME utilities to terminate the user session.
+# Will forcefully log the user out in order for the Desktop Manager to be reinitialized.
+#
+# Note: This will need to be run from the current logged-in user session.
+gnome-session-quit --logout --force

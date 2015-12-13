@@ -1,123 +1,191 @@
 #!/usr/bin/env python
-import gtk
 import appindicator
-import os
 import commands
 import gtk
+import os
 import sys
 
+
 class AMDIndicator:
+
     def __init__(self):
-	self.ind = appindicator.Indicator("AMD Indicator",
-                                           "indicator-messages",
-                                           appindicator.CATEGORY_APPLICATION_STATUS)
-	self.ind.set_status(appindicator.STATUS_ACTIVE)
-	self.ind.set_attention_icon("indicator-messages-new")
-	self.ind.set_icon_theme_path("/usr/local/indicator-amd/")
-	self.isIntegrated = self.checkIntegrated()
-	self.ind.set_icon('intel')
-	if not self.isIntegrated:
-	    self.ind.set_icon('amd')
-	self.setAdditionals()
-        self.menu_setup()
+        self.ind = appindicator.Indicator("AMD Indicator",
+                                          "indicator-messages",
+                                          appindicator.CATEGORY_APPLICATION_STATUS)
+        self.ind.set_status(appindicator.STATUS_ACTIVE)
+        self.ind.set_attention_icon("indicator-messages-new")
+        self.ind.set_icon_theme_path("/usr/local/amd-indicator/")
+        # Assume integrated card is active
+        self.ind.set_icon('intel')
+        # But test for the discrete one as well
+        self.isOnIntegrated = self.is_using_integrated()
+        if not self.isOnIntegrated:
+            self.ind.set_icon('amd')
+        self.configure_additional_gpu_flags()
+        self.initialize_application_tray_menu()
         self.ind.set_menu(self.menu)
 
-    def menu_setup(self):
+    def initialize_application_tray_menu(self):
         self.menu = gtk.Menu()
-	self.info_item = gtk.MenuItem(self.rendererString())
-	self.info_item.set_sensitive(False)
-	self.info_item.show()
-	self.seperator_item = gtk.SeparatorMenuItem()
-	self.seperator_item.show()
-	self.switch_item = gtk.MenuItem("Quick switch graphics processor")
-	self.switch_item.connect("activate", self.switch)
-	self.switch_item.show()
-	self.seperator2_item = gtk.SeparatorMenuItem()
-	self.seperator2_item.show()
-	self.ccc_item = gtk.MenuItem("Catalyst Control Center")
-        self.ccc_item.connect("activate", self.openccc)
+        # Show the currently active GPU as the first menu item
+        self.active_gpu_info_item = gtk.MenuItem(self.grab_active_renderer_string())
+        self.active_gpu_info_item.set_sensitive(False)
+        self.active_gpu_info_item.show()
+        # Add a separator
+        self.seperator_item = gtk.SeparatorMenuItem()
+        self.seperator_item.show()
+        # Switch between GPUs item
+        self.switch_gpu_item = gtk.MenuItem("Switch between Graphics Processors (GPUs)")
+        self.switch_gpu_item.connect("activate", self.switch_between_gpus)
+        self.switch_gpu_item.show()
+        # Add a separator
+        self.separator2_item = gtk.SeparatorMenuItem()
+        self.separator2_item.show()
+        # ATI CCC shortcuts
+        self.ccc_item = gtk.MenuItem("Catalyst Control Center")
+        self.ccc_item.connect("activate", self.open_ati_ccc)
         self.ccc_item.show()
-	self.cccsu_item = gtk.MenuItem("Catalyst Control Center (Admin)")
-        self.cccsu_item.connect("activate", self.opencccsu)
+        self.cccsu_item = gtk.MenuItem("Catalyst Control Center (Privileged)")
+        self.cccsu_item.connect("activate", self.open_ati_ccc_su)
         self.cccsu_item.show()
-	self.seperator3_item = gtk.SeparatorMenuItem()
-	self.seperator3_item.show()
-	self.DarkTheme_item = gtk.MenuItem("Use dark theme icons")
-        self.DarkTheme_item.connect("activate", self.DarkTheme)
+        # Add a separator
+        self.separator3_item = gtk.SeparatorMenuItem()
+        self.separator3_item.show()
+        # Change to dark theme item
+        self.DarkTheme_item = gtk.MenuItem("Use dark theme icons")
+        self.DarkTheme_item.connect("activate", self.use_dark_theme)
         self.DarkTheme_item.show()
-	self.LightTheme_item = gtk.MenuItem("Use light theme icons")
-        self.LightTheme_item.connect("activate", self.LightTheme)
+        # Change to light theme item
+        self.LightTheme_item = gtk.MenuItem("Use light theme icons")
+        self.LightTheme_item.connect("activate", self.use_light_theme)
         self.LightTheme_item.show()
-	self.menu.append(self.info_item)
-	self.menu.append(self.seperator_item)
-	self.menu.append(self.switch_item)
-	self.menu.append(self.seperator2_item)
-	self.menu.append(self.ccc_item)
-	self.menu.append(self.cccsu_item)
-	self.menu.append(self.seperator3_item)
-	self.menu.append(self.DarkTheme_item)
-	self.menu.append(self.LightTheme_item)
+        # Add a separator
+        self.separator4_item = gtk.SeparatorMenuItem()
+        self.separator4_item.show()
+        # Quit menu item
+        self.quit_application_item = gtk.MenuItem("Exit")
+        self.quit_application_item.connect("activate", self.quit_application)
+        self.quit_application_item.show()
+        # Append all items to the application menu
+        self.menu.append(self.active_gpu_info_item)
+        self.menu.append(self.seperator_item)
+        self.menu.append(self.switch_gpu_item)
+        self.menu.append(self.separator2_item)
+        self.menu.append(self.ccc_item)
+        self.menu.append(self.cccsu_item)
+        self.menu.append(self.separator3_item)
+        self.menu.append(self.DarkTheme_item)
+        self.menu.append(self.LightTheme_item)
+        self.menu.append(self.quit_application_item)
 
-    def setAdditionals(self):
-	if self.isIntegrated:
-	    os.system("gconftool-2 --type Boolean --set /apps/compiz-1/plugins/opengl/screen0/options/sync_to_vblank True")
-	else:
-	    os.system("gconftool-2 --type Boolean --set /apps/compiz-1/plugins/opengl/screen0/options/sync_to_vblank False")
+    def configure_additional_gpu_flags(self):
+        # For integrated graphics adapter
+        if self.isOnIntegrated:
+            # Switch on Vertical Sync
+            os.system(
+                    "gconftool-2 --type Boolean --set /apps/compiz-1/plugins/opengl/screen0/options/"
+                    "sync_to_vblank True")
+            # Append other configuration flags here
+            # ...
 
-    def switch(self, dude):
-	self.showRebootDialog()
-	if self.isIntegrated:
-	    self.switchToDiscrete()
-	else:
-	    self.switchToIntegrated()
+        # For discrete graphics adapter
+        else:
+            # Switch off Vertical Sync (because AMD ATI drivers will handle this)
+            os.system(
+                    "gconftool-2 --type Boolean --set /apps/compiz-1/plugins/opengl/screen0/options/"
+                    "sync_to_vblank False")
+            # Append other configuration flags here
+            # ...
 
-    def DarkTheme(self, dude):
-	os.system("sudo /usr/local/indicator-amd/dark-theme-icons && /usr/local/indicator-amd/restart")
+    def switch_between_gpus(self, dude):
+        self.show_inform_user_dialog()
+        if self.isOnIntegrated:
+            self.switch_2_discrete_gpu()
+        else:
+            self.switch_2_integrated_gpu()
 
-    def LightTheme(self, dude):
-	os.system("sudo /usr/local/indicator-amd/light-theme-icons && /usr/local/indicator-amd/restart")
+    @staticmethod
+    def use_dark_theme():
+        os.system("sudo /usr/local/amd-indicator/dark-theme-icons && /usr/local/amd-indicator/restart")
 
-    def openccc(self, dude):
-	os.system("/usr/bin/amdcccle")
+    @staticmethod
+    def use_light_theme():
+        os.system("sudo /usr/local/amd-indicator/light-theme-icons && /usr/local/amd-indicator/restart")
 
-    def opencccsu(self, dude):
-	os.system("/usr/bin/amdxdg-su -c /usr/bin/amdcccle")
+    @staticmethod
+    def open_ati_ccc():
+        os.system("/usr/bin/amdcccle")
 
-    def showRebootDialog(self):
-	message = "You will have to be logged out in order for changes to take effect.\nPlease save any WORK-IN-PROGRESS and close all your applications\nbefore pressing the OK button or they will be forcefully closed."
-	dialog = gtk.MessageDialog(None, gtk.DIALOG_MODAL, gtk.MESSAGE_INFO,
-                                       gtk.BUTTONS_NONE, message)
-	dialog.set_deletable(False)
-	dialog.connect('delete_event', self.ignore)
-	dialog.add_button(gtk.STOCK_OK, gtk.RESPONSE_OK)
-	response = dialog.run()
-	dialog.destroy()
+    @staticmethod
+    def open_ati_ccc_su():
+        os.system("/usr/bin/amdxdg-su -c /usr/bin/amdcccle")
+
+    def show_inform_user_dialog(self):
+        message = "You will have to be logged out in order for changes to take effect.\nPlease save any " \
+                  "WORK-IN-PROGRESS and close all your applications before pressing the 'OK button' below or they " \
+                  "will be forcefully closed."
+        dialog = gtk.MessageDialog(None, gtk.DIALOG_MODAL, gtk.MESSAGE_INFO,
+                                   gtk.BUTTONS_NONE, message)
+        dialog.set_deletable(False)
+        dialog.connect('delete_event', self.ignore)
+        dialog.add_button(gtk.STOCK_OK, gtk.RESPONSE_OK)
+        response = dialog.run()
+        dialog.destroy()
+
+    @staticmethod
+    def quit_application():
+        """
+            Cleanly quits the application with return code 0.
+
+        :return: A Number (zero) if successfully ran.
+        """
+        sys.exit(None)
 
     def ignore(*args):
-	return gtk.TRUE
+        return gtk.TRUE
 
-    def checkIntegrated(self):
-	stat, out = commands.getstatusoutput("amdconfig --pxl")
-	if "Discrete" in out:
-	    return False
-	else:
-	    return True
+    @staticmethod
+    def is_using_integrated():
+        """
+            Tests if the system is currently using the built-in processor integrated CPU or the discrete one, based
+        on the currently selected user preferences.
 
-    def rendererString(self):
-	stat, out = commands.getstatusoutput('glxinfo | grep "OpenGL renderer string"')
-	out = out.replace("OpenGL renderer string", "Using")
-	return out
+        :return: a True denoting whether the active GPU is the integrated one or False otherwise
+        """
+        stat, out = commands.getstatusoutput("amdconfig --pxl")
+        if "Discrete" in out:
+            return False
+        else:
+            return True
 
-    def switchToIntegrated(self):
-	os.system("sudo /usr/local/indicator-amd/igpuon")
-	os.system("/usr/local/indicator-amd/logout-user")
+    @staticmethod
+    def grab_active_renderer_string():
+        stat, out = commands.getstatusoutput('glxinfo | grep "OpenGL renderer string"')
+        out = out.replace("OpenGL renderer string", "Using")
+        return out
 
-    def switchToDiscrete(self):
-	os.system("sudo /usr/local/indicator-amd/dgpuon")
-	os.system("/usr/local/indicator-amd/logout-user")
+    def switch_2_integrated_gpu(self):
+        os.system("sudo /usr/local/amd-indicator/igpuon")
+        self.force_logout()
 
-    def main(self):
+    def switch_2_discrete_gpu(self):
+        os.system("sudo /usr/local/amd-indicator/dgpuon")
+        self.force_logout()
+
+    @staticmethod
+    def force_logout():
+        """
+            Forcefully terminate the logged user's X session. This will trigger Mint's Desktop Manager to reinitialize 
+        the active GPU.
+
+        :return: None
+        """
+        os.system("/usr/local/amd-indicator/logout-user")
+
+    @staticmethod
+    def main():
         gtk.main()
+
 
 if __name__ == "__main__":
     indicator = AMDIndicator()

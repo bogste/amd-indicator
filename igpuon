@@ -1,7 +1,7 @@
 #!/bin/bash
-## Description: AMD Indicator Intel GPU switch on script.
-## Tested on Mint 17.3 and (fglrx) Catalyst 15.200.xxxx
+## Description: AMD Indicator Intel integrated GPU switch on script.
+## Tested on Mint 17.3 and Catalyst (fglrx) 15.200.xxxx
 
-## Use AMD Configuration Utility to switch to integrated GPU
-## These commands will need to be run as sudo
+# Use AMD Configuration Utility to switch to integrated GPU.
+# These commands will need to be run as sudo.
 amdconfig --px-igpu
