@@ -19,8 +19,8 @@ You will need to be comfortable working with the CLI, because a few packages are
 
 **Make sure you have the proper AMD ATI drivers - _fglrx_ variant, NOT _fglrx-updates_ - installed, preferably via
  Mint's _Driver Manager_ application. However, installing via CLI, as you will see below, should work as well.** (Note: This 
- application has been built for and tested starting with version 15.200.1xxx  of these drivers on a Linux Mint 17.3 x64 ins
- tallation). 
+ application has been built for Linux Mint 17.3 and was tested with version 15.200.1xxx of the ATI drivers on a x64 
+ installation). 
 
 In case the indicator application doesn't start because it is missing the **python module "_appindicator_"**, again, make sure to 
 install missing packages.
