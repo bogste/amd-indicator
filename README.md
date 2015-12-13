@@ -14,11 +14,13 @@ Image credits: [Sadi Yumuşak](https://github.com/Sadi58)
 Prerequisites
 ==============
 
-You will need to have a few packages installed beforehand, in order to take advantage of this indicator.
+You will need to be comfortable working with the CLI, because a few packages are required to be installed beforehand in
+ order to take advantage of this indicator.
 
-**Make sure you have the proper AMD ATI drivers - _fglrx_ variant, NOT _fglrx-updates_ - installed, preferably via Mint's 
-_Driver Manager_ application.** (Note: This application has been built for and tested starting with version 15.200.1xxx 
-of these drivers on a Linux Mint 17.3 x64 installation). 
+**Make sure you have the proper AMD ATI drivers - _fglrx_ variant, NOT _fglrx-updates_ - installed, preferably via
+ Mint's _Driver Manager_ application. However, installing via CLI, as you will see below, should work as well.** (Note: This 
+ application has been built for and tested starting with version 15.200.1xxx  of these drivers on a Linux Mint 17.3 x64 ins
+ tallation). 
 
 In case the indicator application doesn't start because it is missing the **python module "_appindicator_"**, again, make sure to 
 install missing packages.
