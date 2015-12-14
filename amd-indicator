@@ -35,14 +35,14 @@ class AMDIndicator:
         self.seperator_item = gtk.SeparatorMenuItem()
         self.seperator_item.show()
         # Switch between GPUs item
-        self.switch_gpu_item = gtk.MenuItem("Switch between Graphics Processors (GPUs)")
+        self.switch_gpu_item = gtk.MenuItem("Switch between Graphics Processors")
         self.switch_gpu_item.connect("activate", self.switch_between_gpus)
         self.switch_gpu_item.show()
         # Add a separator
         self.separator2_item = gtk.SeparatorMenuItem()
         self.separator2_item.show()
         # ATI CCC shortcuts
-        self.ccc_item = gtk.MenuItem("Catalyst Control Center")
+        self.ccc_item = gtk.MenuItem("Catalyst Control Center (Informative)")
         self.ccc_item.connect("activate", self.open_ati_ccc)
         self.ccc_item.show()
         self.cccsu_item = gtk.MenuItem("Catalyst Control Center (Privileged)")
@@ -76,6 +76,7 @@ class AMDIndicator:
         self.menu.append(self.separator3_item)
         self.menu.append(self.DarkTheme_item)
         self.menu.append(self.LightTheme_item)
+        self.menu.append(self.separator4_item)
         self.menu.append(self.quit_application_item)
 
     def configure_additional_gpu_flags(self):
@@ -97,33 +98,29 @@ class AMDIndicator:
             # Append other configuration flags here
             # ...
 
-    def switch_between_gpus(self, dude):
+    def switch_between_gpus(self, dummy):
         self.show_inform_user_dialog()
         if self.isOnIntegrated:
             self.switch_2_discrete_gpu()
         else:
             self.switch_2_integrated_gpu()
 
-    @staticmethod
-    def use_dark_theme():
+    def use_dark_theme(self, dummy):
         os.system("sudo /usr/local/amd-indicator/dark-theme-icons && /usr/local/amd-indicator/restart")
 
-    @staticmethod
-    def use_light_theme():
+    def use_light_theme(self, dummy):
         os.system("sudo /usr/local/amd-indicator/light-theme-icons && /usr/local/amd-indicator/restart")
 
-    @staticmethod
-    def open_ati_ccc():
+    def open_ati_ccc(self, dummy):
         os.system("/usr/bin/amdcccle")
 
-    @staticmethod
-    def open_ati_ccc_su():
+    def open_ati_ccc_su(self, dummy):
         os.system("/usr/bin/amdxdg-su -c /usr/bin/amdcccle")
 
     def show_inform_user_dialog(self):
-        message = "You will have to be logged out in order for changes to take effect.\nPlease save any " \
-                  "WORK-IN-PROGRESS and close all your applications before pressing the 'OK button' below or they " \
-                  "will be forcefully closed."
+        message = "You will have to be logged out in order for changes to take effect.\n" \
+                  "Please save any WORK-IN-PROGRESS and close all your applications before pressing the 'OK button' " \
+                  "below or they will be forcefully closed."
         dialog = gtk.MessageDialog(None, gtk.DIALOG_MODAL, gtk.MESSAGE_INFO,
                                    gtk.BUTTONS_NONE, message)
         dialog.set_deletable(False)
@@ -132,8 +129,7 @@ class AMDIndicator:
         response = dialog.run()
         dialog.destroy()
 
-    @staticmethod
-    def quit_application():
+    def quit_application(self, dummy):
         """
             Cleanly quits the application with return code 0.
 
@@ -144,8 +140,7 @@ class AMDIndicator:
     def ignore(*args):
         return gtk.TRUE
 
-    @staticmethod
-    def is_using_integrated():
+    def is_using_integrated(self):
         """
             Tests if the system is currently using the built-in processor integrated CPU or the discrete one, based
         on the currently selected user preferences.
