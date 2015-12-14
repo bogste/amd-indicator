@@ -1,4 +1,4 @@
-AMD ATI/Intel Indicator for Linux Mint 17 (Cinnamon/MATE)
+AMD ATI/Intel Indicator for Linux Mint 17 x64 (Cinnamon/MATE)
 =============
 
 **An indicator applet for AMD ATI/Intel hybrid graphics _fast_ switching.**

@@ -3,5 +3,5 @@
 ## Tested on Mint 17.3 and Catalyst (fglrx) 15.200.xxxx
 
 # Swap the currently active icons with the Light Themed ones
-cp -f /usr/local/amd-indicator/resources/amd-light.png /usr/local/amd-indicator/amd.png
-cp -f /usr/local/amd-indicator/resources/intel-light.png /usr/local/amd-indicator/intel.png
+ln -sf /usr/local/amd-indicator/resources/amd-light.png /usr/local/amd-indicator/amd.png
+ln -sf /usr/local/amd-indicator/resources/intel-light.png /usr/local/amd-indicator/intel.png

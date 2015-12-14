@@ -70,13 +70,13 @@ chmod a+x /usr/local/amd-indicator/logout-user
 cp resources/amd-dark.png /usr/local/amd-indicator/resources
 cp resources/amd-light.png /usr/local/amd-indicator/resources
 # Set dark theme as default
-ln -s /usr/local/amd-indicator/resources/amd-dark.png /usr/local/amd-indicator/amd.png
+ln -sf /usr/local/amd-indicator/resources/amd-dark.png /usr/local/amd-indicator/amd.png
 
 # Copy and link intel.png to /usr/local/amd-indicator/
 cp resources/intel-dark.png /usr/local/amd-indicator/resources
 cp resources/intel-light.png /usr/local/amd-indicator/resources
 # Set dark theme as default
-ln -s /usr/local/amd-indicator/resources/intel-dark.png /usr/local/amd-indicator/intel.png
+ln -sf /usr/local/amd-indicator/resources/intel-dark.png /usr/local/amd-indicator/intel.png
 # Allow read permissions for everyone
 chmod a+r /usr/local/amd-indicator/*.png
 
