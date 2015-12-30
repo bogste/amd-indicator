@@ -11,6 +11,23 @@ the system). The current version will have to terminate the current user session
 
 Image credits: [Sadi Yumuşak](https://github.com/Sadi58)
 
+Inform yourself
+==============
+In order for you to know about how things reached this point and some potential issues you might hit on the road on 
+getting your hybrid setup to work, it could be useful to check out the following resources:
+
+ - [Ubuntu Community Help Wiki - BinaryDriverHowto/AMD](https://help.ubuntu.com/community/BinaryDriverHowto/AMD) - 
+ contains information on how the drivers will work with your Intel/AMD hybrid graphics machine.
+
+ - [Ubuntu Forums - AMD/Intel Hybrid Graphics works](http://ubuntuforums.org/showthread.php?t=1930450) thread - an 
+ article for the more technically inclined folks which want to find out about how a solution came to be. For example,
+ while developing the version for Linux Mint I had hit some issues like missing files or packages on my system, before
+ being able to fully utilize the indicator application.
+
+ - [Ask Ubuntu - How do I get AMD/Intel Hybrid Graphics drivers to work?]
+ (http://askubuntu.com/questions/205112/how-do-i-get-amd-intel-hybrid-graphics-drivers-to-work/379286#379286) - how the 
+ folks got a version of this application working for Ubuntu, which was later ported to Linux Mint. 
+
 Prerequisites
 ==============
 
